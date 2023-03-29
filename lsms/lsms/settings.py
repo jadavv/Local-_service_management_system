@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from re import TEMPLATE
+from tempfile import TemporaryDirectory
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR =os.path.join(BASE_DIR,'templates')
+STATIC_DIR=os.path.join(BASE_DIR,'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +42,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'Uapp'
+    'Uapp',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'LSadmin'
+    
 ]
 
 MIDDLEWARE = [
@@ -55,11 +64,11 @@ ROOT_URLCONF = "lsms.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR,'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.templatce.context_processors.debug",
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -69,6 +78,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "lsms.wsgi.application"
+AUTH_USER_MODEL= "Uapp.User"
+LOGIN_REDIRECT_URL ="/"
 
 
 # Database
@@ -121,8 +132,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT ='/static'
+STATICFILES_DIRS =[ 
+    
+    STATIC_DIR,
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+
+
+STATICFILES_DIRS =[
+    BASE_DIR,"static"
+]
+
+AUTH_USER_MODEL= "Uapp.User"
+LOGIN_REDIRECT_URL ="/"
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
